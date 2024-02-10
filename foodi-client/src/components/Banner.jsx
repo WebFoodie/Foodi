@@ -21,68 +21,68 @@ const Banner = () => {
                   <input
                     type="radio"
                     name="rating-2"
-                    className="mask mask-star-2 bg-yellow-500"
+                    className="mask mask-star-2 bg-yellow-500" readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
-                    className="mask mask-star-2 bg-yellow-500"
+                    className="mask mask-star-2 bg-yellow-500" readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
-                    className="mask mask-star-2 bg-yellow-500"
+                    className="mask mask-star-2 bg-yellow-500" readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
-                    className="mask mask-star-2 bg-yellow-500"
+                    className="mask mask-star-2 bg-yellow-500" readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
-                    className="mask mask-star-2 bg-yellow-500"
+                    className="mask mask-star-2 bg-yellow-500" readOnly
                   />
                 </div>
-                <p className="text-red">$18.00</p>
+                <p className="text-red nod">$18.00</p>
               </div>
               </div>
               <div className="sm:flex hidden bg-white py-2 px-3 rounded-2xl items-center gap-3 shadow-md w-64">
                 <img
-                  src="/images/home/b-food1.png"
+                  src="/images/home/category/img3.png"
                   alt="Food Image"
                   className="rounded-2xl"
                 />
               <div className="space-y-1">
-                <h5 className="font-medium mb-1">Spicy Noodles</h5>
+                <h5 className="font-medium mb-1">Chilled Icecream</h5>
                 <div className="rating rating-sm">
                   <input
                     type="radio"
                     name="rating-2"
-                    className="mask mask-star-2 bg-yellow-500"
+                    className="mask mask-star-2 bg-yellow-500" readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
-                    className="mask mask-star-2 bg-yellow-500"
+                    className="mask mask-star-2 bg-yellow-500" readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
-                    className="mask mask-star-2 bg-yellow-500"
+                    className="mask mask-star-2 bg-yellow-500" readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
-                    className="mask mask-star-2 bg-yellow-500"
+                    className="mask mask-star-2 bg-yellow-500" readOnly
                   />
                   <input
                     type="radio"
                     name="rating-2"
-                    className="mask mask-star-2 bg-yellow-500"
+                    className="mask mask-star-2 bg-yellow-500" readOnly
                   />
                 </div>
-                <p className="text-red">$18.00</p>
+                <p className="text-red">$10.00</p>
               </div>
               </div>
           </div>
@@ -102,11 +102,6 @@ const Banner = () => {
             Order Now
           </button>
         </div>
-
-
-
-
-
       </div>
     </div>
   );
