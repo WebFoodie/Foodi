@@ -1,11 +1,21 @@
 // These are SpecialDishes Cards
 
-import React from 'react'
+import React, { useState } from 'react'
 import {Link} from "react-router-dom"
+import {FaHeart} from "react-icons/fa"
 
 const Cards = ({item}) => {
+
+    const [isHeartFillted,setIsHeartFillted] = useState(false);
+    const handleHeartClick = ()=>{
+            setIsHeartFillted(!isHeartFillted);
+    }
+
   return (
-         <div className="flex flex-col my-5 card w-96 bg-base-900 shadow-xl">
+         <div className="flex m-10 flex-col my-5 card w-96 bg-base-100 shadow-xl relative ">
+            <div className={`rating gap-1 absolute right-1 top-2 p-4 heartStar bg-green ${isHeartFillted ? "text-rose-500" : "text-white"}` } onClick={handleHeartClick}>
+                <FaHeart className='h-5 w-5 cursor-pointer '/>
+            </div>
             <Link to={`/menu/${(item._id)}`}></Link>
             <figure>
                 <img src={item.image} alt="" className='hover:scale-105 transition-all duration-200 md:h-72'/>
