@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa6";
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
 const Modal = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit= (data) => console.log(data)
+  const onSubmit = (data) => console.log(data);
   return (
     <dialog id="my_modal_5" className="modal modal-middle sm:modal-middle">
       <div className="modal-box">
@@ -21,7 +21,6 @@ const Modal = () => {
             method="dialog"
           >
             <h3 className="font-bold text-lg">Please Login!</h3>
-
             {/* email */}
             <div className="form-control">
               <label className="label">
@@ -66,6 +65,13 @@ const Modal = () => {
                 Signup now
               </Link>
             </p>
+            <button
+              htmlFor="my_modal_5"
+              onClick={() => document.getElementById("my_modal_5").close()}
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
+              ✕
+            </button>
           </form>
           {/* social sign in */}
           <div className="text-center space-x-3 mb-5">
