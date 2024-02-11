@@ -1,11 +1,11 @@
 import React from "react";
+import Modal from "./Modal";
 import logo from "/logo.png";
 import { LuPhoneCall } from "react-icons/lu";
-import { useState, useEffect } from 'react';
-
+import { useState, useEffect } from "react";
+import { FaRegUser } from "react-icons/fa";
 
 const Navbar = () => {
-
   const [isSticky, setSticky] = useState(false);
 
   // Handel navbar shadow scrolling function
@@ -25,7 +25,7 @@ const Navbar = () => {
     // Cleanup function to remove the event listener when the component unmounts
     return () => {
       window.removeEventListener("scroll", handleScroll);
-    }
+    };
   }, []);
 
   // ${isSticky ? "shadow-md bg-white transition-all duration-300 ease-in-out":""}
@@ -75,7 +75,13 @@ const Navbar = () => {
 
   return (
     <header className="bg-white max-w-screen-2xl container mx-auto fixed  top-0 left-0 right-0 transition-all duration-300 ease-in-out">
-      <div className={`navbar xl:px-2 ${isSticky ? "shadow-md bg-white transition-all duration-300 ease-in-out":""}`}>
+      <div
+        className={`navbar xl:px-2 ${
+          isSticky
+            ? "shadow-md bg-white transition-all duration-300 ease-in-out"
+            : ""
+        }`}
+      >
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -97,7 +103,7 @@ const Navbar = () => {
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
->
+            >
               {navItems}
             </ul>
           </div>
@@ -106,7 +112,9 @@ const Navbar = () => {
           </a>
         </div>
         <div className="navbar-center text-slate-700 hidden lg:flex">
-          <ul className="menu menu-horizontal text-slate-700 px-1">{navItems}</ul>
+          <ul className="menu menu-horizontal text-slate-700 px-1">
+            {navItems}
+          </ul>
         </div>
         <div className="navbar-end">
           {/* Search Items */}
@@ -150,10 +158,14 @@ const Navbar = () => {
               <span className="badge badge-sm indicator-item">8</span>
             </div>
           </div>
-          {/* Contact Btn */}
-          <a className="btn bg-green rounded-full px-6 text-white flex items-center gap-2">
-            <LuPhoneCall /> Contact
-          </a>
+          {/* Login Btn */}
+          <button
+            onClick={() => document.getElementById("my_modal_5").showModal()}
+            className="btn bg-green rounded-full px-6 text-white flex items-center gap-2"
+          >
+            <FaRegUser /> Login
+          </button>
+          <Modal/>
         </div>
       </div>
     </header>
