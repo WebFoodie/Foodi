@@ -205,9 +205,9 @@ const CartPage = () => {
             <div className="my-12 flex flex-col md:flex-row justify-between items-start">
     <div className="md:w-1/2 space-y-3">
         <h3 className="font-medium">Customer Details</h3>
-        {/* <p>Name: {user.displayName}</p>
+        <p>Name: {user.displayName}</p>
         <p>Email: {user.email}</p>
-        <p>User_id: {user.uid}</p> */}
+        <p>User_id: {user.uid}</p>
     </div>
     <div className="md:w-1/2 space-y-3">
         <h3 className="font-medium">Shopping Details</h3>

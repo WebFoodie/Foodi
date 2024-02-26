@@ -7,6 +7,7 @@ const Profile = ({ user }) => {
     logOut()
       .then(() => {
         // Sign-out successful.
+        alert("Logout Successfull")
       })
       .catch((error) => {
         // An error happened.

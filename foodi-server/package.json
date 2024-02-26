@@ -8,13 +8,21 @@
     "start": "nodemon index.js"
   },
   "keywords": [],
+<<<<<<< Updated upstream
   "author": "Vinod and Prabhjot",
+=======
+  "author": "",
+>>>>>>> Stashed changes
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.18.2",
+<<<<<<< Updated upstream
     "mongodb": "^6.3.0",
     "nodemon": "^3.1.0"
+=======
+    "mogodb": "^0.0.1-security"
+>>>>>>> Stashed changes
   }
 }

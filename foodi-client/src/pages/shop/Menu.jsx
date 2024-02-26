@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import Categories from '../home/Categories';
-import Cards from '../../components/Cards';
-import {FaFilter} from "react-icons/fa"
+import React, { useEffect, useState } from "react";
+import Cards from "../../components/Cards";
+import { FaFilter } from "react-icons/fa";
 
 const Menu = () => {
-    const [menu, setMenu] = useState([]); // Why [] because in menu.json the all elements in array
-    const [filteredItem, setFilteredItem] = useState([]);
-    const [selecedCategory, setSelecedCategory] = useState("all");
-    const [sortOption, setSortOption] = useState("default");
-    const [currentPage,setCurrentPage] = useState(1);
-    const [itemsPerPage]=useState(9);
+  const [menu, setMenu] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [sortOption, setSortOption] = useState("default");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(8); // Number of items to display per page
 
+<<<<<<< Updated upstream
     // Data Loading
     useEffect(() => {
         // Fetch Data from the backend
@@ -29,143 +29,188 @@ const Menu = () => {
         // Call the function
         fetchData();
     }, [])
+=======
+  useEffect(() => {
+    // Fetch data from the backend
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/menu.json");
+        const data = await response.json();
+        setMenu(data);
+        setFilteredItems(data); // Initially, display all items
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+>>>>>>> Stashed changes
 
+    fetchData();
+  }, []);
 
-    // Filtering data base in category
-    const filterItem = (category) => {
-        const filtered = category === "all" ? menu : menu.filter((item) => item.category === category);
+  const filterItems = (category) => {
+    const filtered =
+      category === "all"
+        ? menu
+        : menu.filter((item) => item.category === category);
 
-        setFilteredItem(filtered);
-        setSelecedCategory(category);
-        setCurrentPage(1);
+    setFilteredItems(filtered);
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
+
+  const showAll = () => {
+    setFilteredItems(menu);
+    setSelectedCategory("all");
+    setCurrentPage(1); 
+  };
+
+  const handleSortChange = (option) => {
+    setSortOption(option);
+
+    // Logic for sorting based on the selected option
+    let sortedItems = [...filteredItems];
+
+    switch (option) {
+      case "A-Z":
+        sortedItems.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case "Z-A":
+        sortedItems.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      case "low-to-high":
+        sortedItems.sort((a, b) => a.price - b.price);
+        break;
+      case "high-to-low":
+        sortedItems.sort((a, b) => b.price - a.price);
+        break;
+      default:
+        // Do nothing for the "default" case
+        break;
     }
 
-    // Show all data
-    const showAll = () => {
-        setFilteredItem(menu);
-        setSelecedCategory("all");
-        setCurrentPage(1);
-    }
+    setFilteredItems(sortedItems);
+    setCurrentPage(1);
+  };
 
-    // Sorting based on A-Z , Z-A, Low-High Priceing
-    const handleSortChange = (option) => {
-        setSortOption(option);
+//   console.log(filteredItems);
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
-        let sortedItems = [...filteredItem];
-
-        // logic
-        switch (option) {
-            case "A-Z":
-                sortedItems.sort((a, b) => a.name.localeCompare(b.name))
-                break;
-            case "Z-A":
-                sortedItems.sort((a, b) => b.name.localeCompare(a.name))
-                break;
-            case "low-to-high":
-                sortedItems.sort((a, b) => a.price - (b.price))
-                break;
-            case "high-to-low":
-                sortedItems.sort((a, b) => b.price - (a.price))
-                break;
-        }
-
-        setFilteredItem(sortedItems);
-        setCurrentPage(1);
-
-    }
-
-    //  Pagination Logic : 1 2 3 4 etc pages
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = filteredItem.slice(indexOfFirstItem,indexOfLastItem);
-    const paginate = (pageNumber) =>setCurrentPage(pageNumber);
-
-    return (
-        <div>
-            {/* Menu Banner */}
-            <div className="section-container bg-gradient-to-r from-[#FAFAFA] to-[#FCFCFC] ">
-                <div className="py-48 flex flex-col justify-center items-center gap-8">
-                    <div className="text-center  space-y-7 px-4">
-                        <h2 className="md:text-6xl text-4xl font-bold md:leading-snug leading-snug">
-                            For the Love of Delicious {" "}
-                            <span className="text-green">Food</span>
-                        </h2>
-                        <p className="text-2xl text-[#4A4A4A] mx-auto md:">
-                            Come with family and feel the joy of mouthwatering food such as Greek Salad, Lasagne,Butternut
-                            Pumpking, Tokusen Wagyu, Olivase Rellenas and more for a moderate cost
-                        </p>
-                        <button className="btn bg-green px-8 py-3 font-semibold text-white rounded-full">
-                            Order Now
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            {/* Menu shop section */}
-            <div className='section-container my-5'>
-
-                {/* Filtering and sorting */}
-                <div className='flex flex-col md:flex-row flex-wrap md:justify-between items-center space-y-3 mb-8'>
-
-                    {/* all category Btns */}
-                    <div className='flex flex-row justify-start md:items-center md:gap-8 gap-4 flex-wrap'>
-                        {/* Here the classname active refers to just make the color green and uderline (in App.css) */}
-                        <button onClick={showAll}
-                            className={selecedCategory === 'all' ? "active" : ""}>All</button>
-                        <button onClick={() => filterItem("salad")} className={selecedCategory === 'salad' ? "active" : ""}>Salad</button>
-                        <button onClick={() => filterItem("pizza")} className={selecedCategory === 'pizza' ? "active" : ""}>Pizza</button>
-                        <button onClick={() => filterItem("soup")} className={selecedCategory === 'soup' ? "active" : ""}>Soups</button>
-                        <button onClick={() => filterItem("dessert")} className={selecedCategory === 'dessert' ? "active" : ""}>Desserts</button>
-                        <button onClick={() => filterItem("drinks")} className={selecedCategory === 'drinks' ? "active" : ""}>Drinks</button>
-                    </div>
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 
-                    {/* sorting base filtering */}
-                    <div className='flex justify-end mb-4 rounded-sm gap-4'>
-                        <div className=' p-2'>
-                            <FaFilter className="h-4 w-4 text-black"/>
-                        </div>
-                        {/* sorting options */}
-                        <select name = "sort" id="sort" onChange={(e)=>handleSortChange(e.target.value)} 
-                        value={sortOption} 
-                        className='text-white px-2 py-1 rounded-lg bg-black'>
-                        <option value="default">Default</option>
-                        <option value="A-Z">A-Z</option>
-                        <option value="Z-A">Z-A</option>
-                        <option value="low-to-high">Low To High</option>
-                        <option value="high-to-low">High To Low</option>
-
-                        </select>
-                    </div>
-                  
-
-                    
-                    
-                </div>
-
-                {/* Product Card */}
-                <div className='grid md:grid-col-4 sm:grid-cols-3 grid-col-1 gap-4'>
-                    {
-                        currentItems.map((item) => (
-                            <Cards key={item._id} item={item} />
-                        ))
-                    }
-                </div>
-            </div>
-
-            {/* Pagination Section */}
-            <div className='flex justify-center my-8'>
-                {
-                    Array.from({length :Math.ceil(filteredItem.length/itemsPerPage)}).map((_,index)=>(
-                        <button key={index+1}
-                        onClick={()=>paginate(index+1)} className={`mx-1 px-3 py-1 rounded-full ${currentPage === index+1 ? "bg-green text-white" : "bg-gray-200 "}`}>
-                                {index+1}
-                        </button>
-                    ))
-                }
-            </div>
+  return (
+    <div>
+      {/* menu banner */}
+      <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4 bg-gradient-to-r from-0% from-[#FAFAFA] to-[#FCFCFC] to-100%">
+        <div className="py-48 flex flex-col items-center justify-center">
+          {/* content */}
+          <div className=" text-center px-4 space-y-7">
+            <h2 className="md:text-5xl text-4xl font-bold md:leading-snug leading-snug">
+              For the Love of Delicious <span className="text-green">Food</span>
+            </h2>
+            <p className="text-[#4A4A4A] text-xl md:w-4/5 mx-auto">
+              Come with family & feel the joy of mouthwatering food such as
+              Greek Salad, Lasagne, Butternut Pumpkin, Tokusen Wagyu, Olivas
+              Rellenas and more for a moderate cost
+            </p>
+            <button className="bg-green font-semibold btn text-white px-8 py-3 rounded-full">
+              Order Now
+            </button>
+          </div>
         </div>
-    )
-}
+      </div>
 
-export default Menu
+      {/* menu shop  */}
+      <div className="section-container">
+        <div className="flex flex-col md:flex-row flex-wrap md:justify-between items-center space-y-3 mb-8">
+          
+           {/* all category buttons */}
+          <div className="flex flex-row justify-start md:items-center md:gap-8 gap-4  flex-wrap">
+            <button
+              onClick={showAll}
+              className={selectedCategory === "all" ? "active" : ""}
+            >
+              All
+            </button>
+            <button
+              onClick={() => filterItems("salad")}
+              className={selectedCategory === "salad" ? "active" : ""}
+            >
+              Salad
+            </button>
+            <button
+              onClick={() => filterItems("pizza")}
+              className={selectedCategory === "pizza" ? "active" : ""}
+            >
+              Pizza
+            </button>
+            <button
+              onClick={() => filterItems("soup")}
+              className={selectedCategory === "soup" ? "active" : ""}
+            >
+              Soups
+            </button>
+            <button
+              onClick={() => filterItems("dessert")}
+              className={selectedCategory === "dessert" ? "active" : ""}
+            >
+              Desserts
+            </button>
+            <button
+              onClick={() => filterItems("drinks")}
+              className={selectedCategory === "drinks" ? "active" : ""}
+            >
+              Drinks
+            </button>
+          </div>
+
+            {/* filter options */}
+          <div className="flex justify-end mb-4 rounded-sm">
+            <div className="bg-black p-2 ">
+              <FaFilter className="text-white h-4 w-4" />
+            </div>
+            <select
+              id="sort"
+              onChange={(e) => handleSortChange(e.target.value)}
+              value={sortOption}
+              className="bg-black text-white px-2 py-1 rounded-sm"
+            >
+              <option value="default"> Default</option>
+              <option value="A-Z">A-Z</option>
+              <option value="Z-A">Z-A</option>
+              <option value="low-to-high">Low to High</option>
+              <option value="high-to-low">High to Low</option>
+            </select>
+          </div>
+        </div>
+
+        {/* product card */}
+        <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4 ">
+          {currentItems.map((item) => (
+            <Cards key={item._id} item={item} />
+          ))}
+        </div>
+      </div>
+
+       {/* Pagination */}
+       <div className="flex justify-center my-8">
+        {Array.from({ length: Math.ceil(filteredItems.length / itemsPerPage) }).map((_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={`mx-1 px-3 py-1 rounded-full ${
+              currentPage === index + 1 ? "bg-green text-white" : "bg-gray-200"
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Menu;
