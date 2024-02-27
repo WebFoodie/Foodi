@@ -12,7 +12,7 @@ const CartPage = () => {
     const [cartItems,setCartItems] = useState([]);
 
     // calculate price
-    const calculatePrice = (item)=>{
+    const calculatePrice = (item)=>{    
         return item.price * item.quantity
     }
 

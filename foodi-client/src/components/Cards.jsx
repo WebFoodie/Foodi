@@ -24,7 +24,7 @@ const Cards = ({item}) => {
     const handleAddtoCart = (item)=>{
         // console.log("item clicked ", item);
 
-        // check if the user is present or not (login or not)
+        // check if the user is present or not (login ornot)
 
         if(user && user?.email){
             const cartItem = {menuItemId: _id,name , quantity:1, image,price,email:user.email};
