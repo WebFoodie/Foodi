@@ -146,7 +146,7 @@ const Menu = () => {
 
           {/* filter options */}
           <div className="flex justify-end mb-4 rounded-sm">
-            <div className="bg-black p-2 ">
+            <div className="bg-black p-2 mr-1">
               <FaFilter className="text-white h-4 w-4" />
             </div>
             <select
@@ -165,7 +165,7 @@ const Menu = () => {
         </div>
 
         {/* product card */}
-        <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4 ">
+        <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 ">
           {currentItems.map((item) => (
             <Cards key={item._id} item={item} />
           ))}
