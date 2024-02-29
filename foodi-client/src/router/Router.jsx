@@ -4,12 +4,16 @@ import Home from "../pages/home/Home";
 import Menu from "../pages/shop/Menu";
 import Signup from "../components/Signup";
 import CartPage from "../pages/shop/CartPage";
-import  UpdateProfile  from "../pages/dashboard/UpdateProfile";
+import UpdateProfile from "../pages/dashboard/UpdateProfile";
+import Dashboard from "../pages/dashboard/admin/Dashboard";
+import DashboardLayout from "../layout/DashboardLayout";
+import Users from "../pages/dashboard/admin/Users";
+
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-
     children: [
       {
         path: "/",
@@ -17,22 +21,36 @@ const router = createBrowserRouter([
       },
       {
         path: "/menu",
-        element:<Menu/> ,
+        element: <Menu />,
       },
       {
         path: "/update-profile",
-        element:<UpdateProfile/>
+        element: <UpdateProfile />,
       },
       {
         path: "/cart-page",
-        element : <CartPage/>
-      }
+        element: <CartPage />,
+      },
     ],
   },
   {
     path: "/signup",
-    element:<Signup/>,
-  }
+    element: <Signup />,
+  },
+  {
+    path: "dashboard", 
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "", 
+        element: <Dashboard />,
+      },
+      {
+        path: "users", // Relative path from '/dashboard'
+        element: <Users/>,
+      },
+    ],
+  },
 ]);
 
 export default router;
