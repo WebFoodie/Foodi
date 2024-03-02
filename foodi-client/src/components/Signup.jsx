@@ -4,8 +4,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Modal from "./Modal";
 import { AuthContext } from "../contexts/AuthProvider";
+import axios from "axios";
 
 const Signup = () => {
+  
+  const { singUpWithGmail, updateUserProfile } = useContext(AuthContext);
+
   const {
     register,
     handleSubmit,
@@ -25,10 +29,17 @@ const Signup = () => {
       .then((result) => {
         // Signed up
         const user = result.user;
-        alert("Account creation successfully done!");
-        document.getElementById("my_modal_5").close();
-        navigate(from, { replace: true });
-        // ...
+        updateUserProfile(data.email,data.photoURL).then(()=>{
+          const userInfor = {
+            name : data.name,
+            email: data.email,
+          }
+          axios.post('http://localhost:6001/users',userInfor)
+          .then((response)=>{
+            alert("Signin successful");
+            navigate(form,{replace:true});
+          })
+        })
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -36,6 +47,26 @@ const Signup = () => {
         // ..
       });
   };
+
+  // login with google
+  const handleRegister = ()=>{
+    singUpWithGmail()
+    .then((result)=>{
+      const user = result.user;
+      const userInfor = {
+        name : result?.user?.displayName,
+        email : result?.user?.email,
+      }
+      axios.post('http://localhost:6001/users',userInfor)
+      .then((response)=>{
+        alert("Signin successful");
+        navigate("/");
+      })
+    })
+    .catch((eroor)=> console.log(error));
+  }
+
+
   return (
     <div className="max-w-md bg-white shadow w-full mx-auto flex items-center justify-center my-20">
       <div className="modal-action flex flex-col justify-center mt-0">
