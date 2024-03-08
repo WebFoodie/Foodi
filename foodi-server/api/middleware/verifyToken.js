@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 // verify jwt token
 // middleware
-const varifyToken = (req,res,next)=>{
+const verifyToken = (req,res,next)=>{
     if(!req.headers.authorization){
         return res.status(401).send({message : "unauthorized access"});
     }
@@ -16,6 +16,7 @@ const varifyToken = (req,res,next)=>{
         req.decode = decode;
         next();
     })
+    
 }
 
-module.exports = varifyToken;
+module.exports = verifyToken;

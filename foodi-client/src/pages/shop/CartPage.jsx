@@ -17,9 +17,11 @@ const CartPage = () => {
     }
 
     // calculate total price
-    const cartSubTotal = cart.reduce((total, item) => {
-        return total + calculatePrice(item);
-    }, 0);
+    const cartSubTotal = Array.isArray(cart)
+      ? cart.reduce((total, item) => {
+          return total + calculatePrice(item);
+        }, 0)
+      : 0;
 
     const orderTotal = cartSubTotal;
 

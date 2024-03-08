@@ -1,10 +1,9 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors = require('cors');
-const mongoose = require('mongoose');
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-
+const cors = require("cors");
+const mongoose = require("mongoose");
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
 const PORT = process.env.PORT || 6001;
 
@@ -15,60 +14,42 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB configuration using mongoose
-mongoose.connect(
+mongoose
+  .connect(
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@demo-foodi-client.mtdws7f.mongodb.net/demo-foodi-client`,
     { useNewUrlParser: true, useUnifiedTopology: true }
-)
-.then(() => {
+  )
+  .then(() => {
     console.log("MongoDB Connected Successfully!");
-})
-.catch((error) => {
+  })
+  .catch((error) => {
     console.error("Error connecting to MongoDB:", error);
-});
+  });
 
 // jwt authentication
-app.post ('/jwt',async(req,res)=>{
-    const user = req.body;
-    const token = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{
-        expiresIn:'1hr'
-    })
-    res.send({token});
-})
-
-// verify jwt token
-// middleware
-
-const varifyToken = (req,res,next)=>{
-    if(!req.headers.authorization){
-        return res.status(401).send({message : "unauthorized access"});
-    }
-    const token = req.headers.authorization.split(' ')[1];
-    console.log(token);
-    jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,decode)=>{
-        if(err){
-            return res.status(401).send({message:"Token is invalid"});
-        }
-        req.decode = decode;
-        next();
-    })
-}
-
+app.post('jwt', async (req, res) => {
+  const user = req.body;
+  const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "1hr",
+  });
+  res.send({ token });
+});
 
 
 
 // Import routes
-const menuRoutes = require('./api/routes/menuRoutes');
-const cartRoutes = require('./api/routes/cartRoutes');
-const userRoutes = require('./api/routes/userRoutes');
- 
-app.use('/menu', menuRoutes);
-app.use('/carts', cartRoutes);
-app.use('/users', userRoutes);
+const menuRoutes = require("./api/routes/menuRoutes");
+const cartRoutes = require("./api/routes/cartRoutes");
+const userRoutes = require("./api/routes/userRoutes");
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.use("/menu", menuRoutes);
+app.use("/carts", cartRoutes);
+app.use("/users", userRoutes);
+
+app.get("/",(req, res) => {
+  res.send("Hello World!");
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

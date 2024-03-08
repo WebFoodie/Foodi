@@ -8,7 +8,7 @@ import UpdateProfile from "../pages/dashboard/UpdateProfile";
 import Dashboard from "../pages/dashboard/admin/Dashboard";
 import DashboardLayout from "../layout/DashboardLayout";
 import Users from "../pages/dashboard/admin/Users";
-
+import Login from "../components/Login";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/login",
+    element:<Login/>
   },
   {
     path: "dashboard", 
