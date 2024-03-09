@@ -36,7 +36,7 @@ const Signup = () => {
             name: data.name,
             email: data.email,
           };
-          axiosPublic.post("/users", userInfor).then((response) => {
+          axiosPublic.post("http://localhost:6001/users", userInfor).then((response) => {
             // console.log(response);
             alert("Signin successful!");
             navigate(from, { replace: true });
@@ -59,7 +59,7 @@ const Signup = () => {
           name: result?.user?.displayName,
           email: result?.user?.email,
         };
-        axiosPublic.post("/users", userInfor).then((response) => {
+        axiosPublic.post("http://localhost:6001/users", userInfor).then((response) => {
           // console.log(response);
           alert("Signin successful!");
           navigate("/");

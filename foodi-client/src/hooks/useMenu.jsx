@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const useMenu = () => {
   const axiosPublic = useAxiosPublic();
-
+  // console.log("i am in");
   const {
     data: menu = [],
     isPending: loading,
@@ -17,7 +17,6 @@ const useMenu = () => {
       return res.data;
     },
   });
-
   return [menu, loading, refetch];
 };
 

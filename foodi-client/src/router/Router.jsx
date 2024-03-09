@@ -9,6 +9,9 @@ import Dashboard from "../pages/dashboard/admin/Dashboard";
 import DashboardLayout from "../layout/DashboardLayout";
 import Users from "../pages/dashboard/admin/Users";
 import Login from "../components/Login";
+import AddMenu from "../pages/dashboard/admin/AddMenu";
+import ManageItems from "../pages/dashboard/admin/ManageItems";
+import UpdateMenu from "../pages/dashboard/admin/UpdataMenu";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +56,19 @@ const router = createBrowserRouter([
         path: "users", // Relative path from '/dashboard'
         element: <Users/>,
       },
+      {
+        path:"add-menu",
+        element:<AddMenu/>
+      },
+      {
+        path:"manage-items",
+        element:<ManageItems/>
+      },
+      {
+        path:"update-menu/:id",
+        element:<UpdateMenu/>,
+        loader:({params}) => fetch(`http://localhost:6001/menu/${params.id}`)
+      }
     ],
   },
 ]);
