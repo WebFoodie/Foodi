@@ -13,45 +13,55 @@ const UpdateMenu = () => {
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
   
     // image hosting key
     const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
     // console.log(image_hosting_key)
     const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
     const onSubmit = async (data) => {
-      // console.log(data)
-      const imageFile = { image: data.image[0] };
-      const hostingImg = await axiosPublic.post(image_hosting_api, imageFile, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      });
-      // console.log(hostingImg.data)
-      if (hostingImg.data.success) {
-        const menuItem = {
-          name: data.name,
-          category: data.category,
-          price: parseFloat(data.price), 
-          recipe: data.recipe,
-          image: hostingImg.data.data.display_url
-        };
-  
-        // console.log(menuItem);
-        const postMenuItem = axiosSecure.patch(`/menu/${item._id}`, menuItem);
-        if(postMenuItem){
-          reset()
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Your item updated successfully!",
-            showConfirmButton: false,
-            timer: 1500
+      try {
+          const imageFile = new FormData();
+          imageFile.append('image', data.image[0]);
+      
+          const hostingImg = await axiosPublic.post(image_hosting_api, imageFile, {
+              headers: {
+                  "content-type": "multipart/form-data",
+              },
           });
-          navigate("/dashboard/manage-items")
-        }
+  
+          if (hostingImg.data && hostingImg.data.success) {
+              const menuItem = {
+                  name: data.name,
+                  category: data.category,
+                  price: parseFloat(data.price), 
+                  recipe: data.recipe,
+                  image: hostingImg.data.data.display_url
+              };
+  
+              const postMenuItem = await axiosSecure.patch(`/menu/${item._id}`, menuItem);
+              if (postMenuItem && postMenuItem.status === 200) { // Ensure successful status code
+                  reset();
+                  Swal.fire({
+                      position: "top-end",
+                      icon: "success",
+                      title: "Your item updated successfully!",
+                      showConfirmButton: false,
+                      timer: 1500
+                  });
+                  navigate("/dashboard/manage-items");
+              } else {
+                  throw new Error('Failed to update item');
+              }
+          } else {
+              throw new Error('Failed to upload image');
+          }
+      } catch (error) {
+          console.error('Error updating item:', error);
+          // Handle error (e.g., display error message to user)
       }
-    };
+  };
+  
   return (
     <div className="w-full md:w-[870px] px-4 mx-auto">
       <h2 className="text-2xl font-semibold my-4">

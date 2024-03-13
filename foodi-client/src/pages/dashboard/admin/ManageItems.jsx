@@ -24,7 +24,7 @@ const ManageItems = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
-    //   if (result.isConfirmed) {
+      if (result.isConfirmed) {
         const res = await axiosSecure.delete(`/menu/${item._id}`);
         // console.log(res);
        if(res) {
@@ -35,7 +35,7 @@ const ManageItems = () => {
           icon: "success",
         });
        }
-    //   }
+      }
     });
   };
 

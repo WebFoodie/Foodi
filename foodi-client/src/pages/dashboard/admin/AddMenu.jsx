@@ -1,39 +1,3 @@
-// import React from "react";
-
-// const AddMenu = () => {
-//   return (
-//     <div className="w-full md:w[870px] px-4 mx-auto">
-//       <h2 className="text-2xl font-semibold my-4">
-//         Upload A New <span className="text-green">Menu Item</span>
-//       </h2>
-
-//       {/* form here */}
-
-//       <div>
-//         <form>
-//           <di className="form-control w-full ">
-//             <div className="label">
-//               <span className="label-text"></span>
-//             </div>
-//             <input
-//               type="text"
-//               placeholder="Type here"
-//               className="input input-bordered w-full max-w-xs"
-//             />
-//             <div className="label">
-//               <span className="label-text-alt">Bottom Left label</span>
-//               <span className="label-text-alt">Bottom Right label</span>
-//             </div>
-//           </di>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AddMenu;
-
-
 import React from "react";
 import { FaUtensils } from "react-icons/fa";
 import { useForm } from "react-hook-form";
@@ -48,40 +12,44 @@ const AddMenu = () => {
 
   // image hosting key
   const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-  // console.log(image_hosting_key)
   const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
-  const onSubmit = async (data) => {
-    // console.log(data)
-    const imageFile = { image: data.image[0] };
-    const hostingImg = await axiosPublic.post(image_hosting_api, imageFile, {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    });
-    // console.log(hostingImg.data)
-    if (hostingImg.data.success) {
-      const menuItem = {
-        name: data.name,
-        category: data.category,
-        price: parseFloat(data.price), 
-        recipe: data.recipe,
-        image: hostingImg.data.data.display_url
-      };
 
-      // console.log(menuItem);
-      const postMenuItem = axiosSecure.post('/menu', menuItem);
-      if(postMenuItem){
-        reset()
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Your Item is inserted successfully!",
-          showConfirmButton: false,
-          timer: 1500
-        });
+  const onSubmit = async (data) => {
+    const imageFile = { image: data.image[0] };
+    try {
+      const hostingImg = await axiosPublic.post(image_hosting_api, imageFile, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+
+      if (hostingImg.data.success) {
+        const menuItem = {
+          name: data.name,
+          category: data.category,
+          price: parseFloat(data.price), 
+          recipe: data.recipe,
+          image: hostingImg.data.data.display_url
+        };
+
+        const postMenuItem = await axiosSecure.post('/menu', menuItem);
+        if (postMenuItem) {
+          reset();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your Item is inserted successfully!",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
       }
+    } catch (error) {
+      // Handle errors appropriately, e.g., display error message
+      console.error("Error occurred:", error);
     }
   };
+
 
   return (
     <div className="w-full md:w-[870px] px-4 mx-auto">
