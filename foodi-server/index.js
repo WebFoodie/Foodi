@@ -6,6 +6,8 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 const PORT = process.env.PORT || 6001;
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 
 // console.log(process.env.ACCESS_TOKEN_SECRET);
 
@@ -45,6 +47,28 @@ const userRoutes = require("./api/routes/userRoutes");
 app.use("/menu", menuRoutes);
 app.use("/carts", cartRoutes);
 app.use("/users", userRoutes);
+
+// stripe payment routes
+
+app.post("/create-payment-intent", async (req, res) => {
+  const { items } = req.body;
+
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: calculateOrderAmount(items),
+    currency: "inr",
+    // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
+
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  });
+});
+
+
 
 app.get("/",(req, res) => {
   res.send("Hello World!");

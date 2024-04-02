@@ -12,6 +12,7 @@ import Login from "../components/Login";
 import AddMenu from "../pages/dashboard/admin/AddMenu";
 import ManageItems from "../pages/dashboard/admin/ManageItems";
 import UpdateMenu from "../pages/dashboard/admin/UpdataMenu";
+import Payment from "../pages/shop/Payment";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
         path: "/cart-page",
         element: <CartPage />,
       },
+      {
+        path: "/process-checkout",
+        element:<Payment/>
+      }
     ],
   },
   {
@@ -44,6 +49,7 @@ const router = createBrowserRouter([
     path: "/login",
     element:<Login/>
   },
+  // Admin route
   {
     path: "dashboard", 
     element: <DashboardLayout />,

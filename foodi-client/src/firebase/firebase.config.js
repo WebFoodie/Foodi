@@ -7,12 +7,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB6RgEa0HJ_duZ6q9_V1lhWEmVjBnWQUXQ",
-  authDomain: "foodi-client-83fc7.firebaseapp.com",
-  projectId: "foodi-client-83fc7",
-  storageBucket: "foodi-client-83fc7.appspot.com",
-  messagingSenderId: "771042901582",
-  appId: "1:771042901582:web:48d337d606b59f9eff0d1f",
+  apiKey: "AIzaSyBwWgLUW4VDaZcVcx79vTLyV6N9tcOhEPc",
+  authDomain: "foodi-client-deploy-85c70.firebaseapp.com",
+  projectId: "foodi-client-deploy-85c70",
+  storageBucket: "foodi-client-deploy-85c70.appspot.com",
+  messagingSenderId: "492063670650",
+  appId: "1:492063670650:web:750bc17619f84a614356c3",
 };
 
 // Initialize Firebase

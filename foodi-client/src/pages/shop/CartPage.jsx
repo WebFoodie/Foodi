@@ -3,6 +3,7 @@ import useCart from '../../hooks/useCart';
 import { FaTrash } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../contexts/AuthProvider';
+import { Link } from 'react-router-dom';
 
 const CartPage = () => {
 
@@ -215,7 +216,9 @@ const CartPage = () => {
                     <h3 className="font-medium">Shopping Details</h3>
                     <p>Total Items: {cart.length}</p>
                     <p>Total Price: ${orderTotal.toFixed(2)}</p>
-                    <button className="btn bg-green text-white">Proceed to Checkout</button>
+                    <Link to="/process-checkout">
+                        <button className="btn bg-green text-white">Proceed to Checkout</button>
+                    </Link>
                 </div>
             </div>
 
