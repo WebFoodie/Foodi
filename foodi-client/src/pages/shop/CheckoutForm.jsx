@@ -1,11 +1,31 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPaypal } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useNavigate } from "react-router-dom";
+
 
 const CheckoutForm = ({ price, cart }) => {
   const stripe = useStripe();
-  const elements = useElements();    
-  const [cardError,setCardError] = useState(''); 
+  const elements = useElements();
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+
+  const [cardError, setCardError] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
+
+  useEffect(() => {
+    if (typeof price !== 'number' || price < 1) {
+      console.log("Price is not a number or less than 1")
+      return;
+    }
+    axiosSecure.post('/create-payment-intent', { price }).then((res) => {
+       // console.log(res.data.clientSecret);
+      setClientSecret(res.data.clientSecret);
+    });
+  }, [price, axiosSecure]);
   const handleSubmit = async (event) => {
     // Block native form submission.
     event.preventDefault();
@@ -21,9 +41,6 @@ const CheckoutForm = ({ price, cart }) => {
     // each type of element.
     const card = elements.getElement(CardElement);
 
-    if (card == null) {
-      return;
-    }
 
     // Use your card Element with other Stripe.js APIs
     const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -34,9 +51,47 @@ const CheckoutForm = ({ price, cart }) => {
     if (error) {
       console.log("[error]", error);
       setCardError(error.message);
-    } else {
-        setCardError("success!");
-      console.log("[PaymentMethod]", paymentMethod);
+      return;
+    } 
+      setCardError("success!");
+     console.log("[PaymentMethod]", paymentMethod);
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            name: user?.displayName || "anonymous",
+            email: user?.email || "unknown",
+          },
+        },
+      });
+    if (confirmError) {
+      console.log(confirmError)
+    }
+    console.log(paymentIntent)
+    if (paymentIntent.status === "succeeded") {
+      console.log(paymentIntent.id);
+      setCardError(`Your transactionId is ${paymentIntent.id}`)
+      //payment info
+
+      const paymentInfo = {
+        email: user.email,
+        transitionId: paymentIntent.id,
+        price,
+        quantity: cart.length,
+        status: "order pending",
+        itemName: cart.map(item => item.name),
+        cartItems: cart.map(item => item._id),
+        menuItems:cart.map(item =>item.menuItemId)
+      };
+      console.log(paymentInfo)
+      //send information to backend
+      axiosSecure.post('/payments', paymentInfo)
+        .then(res => {
+          console.log(res.data)
+          alert("Payment successful!");
+          navigate('/order')
+      })
     }
   };
   return (
@@ -77,18 +132,16 @@ const CheckoutForm = ({ price, cart }) => {
             Pay
           </button>
         </form>
-        {
-            cardError ? <p className="text-red italic  ">{cardError}</p> : ""
-        }
+        {cardError ? <p className="text-red italic  ">{cardError}</p> : ""}
         {/* paypal */}
         <div className="mt-5 text-center">
-            <hr />
-            <button
+          <hr />
+          <button
             type="submit"
             className="btn btn-sm mt-5 bg-orange-500 text-white"
           >
-           <FaPaypal/> Pay wiht Paypal
-          </button>   
+            <FaPaypal /> Pay wiht Paypal
+          </button>
         </div>
       </div>
     </div>

@@ -13,6 +13,7 @@ import AddMenu from "../pages/dashboard/admin/AddMenu";
 import ManageItems from "../pages/dashboard/admin/ManageItems";
 import UpdateMenu from "../pages/dashboard/admin/UpdataMenu";
 import Payment from "../pages/shop/Payment";
+import Order from "../pages/dashboard/Order";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,14 @@ const router = createBrowserRouter([
         element: <Menu />,
       },
       {
+        path: "/order",
+        element: (
+         // <PrivateRoute>
+            <Order />
+         // </PrivateRoute>
+        ),
+      },
+      {
         path: "/update-profile",
         element: <UpdateProfile />,
       },
@@ -37,8 +46,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/process-checkout",
-        element:<Payment/>
-      }
+        element: <Payment />,
+      },
     ],
   },
   {
@@ -47,34 +56,35 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element:<Login/>
+    element: <Login />,
   },
   // Admin route
   {
-    path: "dashboard", 
+    path: "dashboard",
     element: <DashboardLayout />,
     children: [
       {
-        path: "", 
+        path: "",
         element: <Dashboard />,
       },
       {
         path: "users", // Relative path from '/dashboard'
-        element: <Users/>,
+        element: <Users />,
       },
       {
-        path:"add-menu",
-        element:<AddMenu/>
+        path: "add-menu",
+        element: <AddMenu />,
       },
       {
-        path:"manage-items",
-        element:<ManageItems/>
+        path: "manage-items",
+        element: <ManageItems />,
       },
       {
-        path:"update-menu/:id",
-        element:<UpdateMenu/>,
-        loader:({params}) => fetch(`http://localhost:6001/menu/${params.id}`)
-      }
+        path: "update-menu/:id",
+        element: <UpdateMenu />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:6001/menu/${params.id}`),
+      },
     ],
   },
 ]);
