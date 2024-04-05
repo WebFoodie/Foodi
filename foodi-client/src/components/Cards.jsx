@@ -26,7 +26,7 @@ const Cards = ({ item }) => {
     if (user && user.email) {
       const cartItem = { menuItemId: _id, name, quantity: 1, image, price, email: user.email }
 
-      axios.post('http://localhost:6001/carts', cartItem)
+      axios.post('https://complete-foodi-server-2e4j.onrender.com/carts', cartItem)
         .then((response) => {
           console.log(response);
           if (response) {
@@ -87,7 +87,7 @@ const Cards = ({ item }) => {
         <p>{item.recipe}</p>
         <div className="card-actions justify-between items-center mt-2">
           <h5 className="font-semibold">
-            <span className="text-sm text-red">$ </span> {item.price}
+            <span className="text-sm text-red">₹</span> {item.price}
           </h5>
           <button onClick={() => handleAddToCart(item)} className="btn bg-green text-white">Add to Cart </button>
         </div>

@@ -13,7 +13,7 @@ const useAdmin = () => {
   } = useQuery({
     queryKey: [user?.email, "isAdmin"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`http://localhost:6001/users/admin/${user?.email}`);
+      const res = await axiosSecure.get(`https://complete-foodi-server-2e4j.onrender.com/users/admin/${user?.email}`);
       console.log(res+"Hell0");
       res.data.admin = true;
       console.log(res + "Hello2");

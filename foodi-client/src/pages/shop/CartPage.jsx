@@ -39,7 +39,7 @@ const CartPage = () => {
         }).then((result) => {
             refetch();
             if (result.isConfirmed) {
-                fetch(`http://localhost:6001/carts/${item._id}`, {
+                fetch(`https://complete-foodi-server-2e4j.onrender.com/carts/${item._id}`, {
                     method: "DELETE"
                 })
                     .then(res => res.json())
@@ -60,7 +60,7 @@ const CartPage = () => {
 
     // handleIncrease function
     const handleIncrease = (item) => {
-        fetch(`http://localhost:6001/carts/${item._id}`, {
+        fetch(`https://complete-foodi-server-2e4j.onrender.com/carts/${item._id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json; charset=UTF-8"
@@ -96,7 +96,7 @@ const CartPage = () => {
     // handleDecrease function
     const handleDecrease = (item) => {
         if (item.quantity > 1) {
-            fetch(`http://localhost:6001/carts/${item._id}`, {
+            fetch(`https://complete-foodi-server-2e4j.onrender.com/carts/${item._id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json; charset=UTF-8"
@@ -189,7 +189,7 @@ const CartPage = () => {
                                             <input type="number" value={item.quantity} className='w-10 mx-2 text-center overflow-hidden appearance-none' onChange={(e) => console.log(e.target.value)} />
                                             <button className='btn btn-xs' onClick={() => handleIncrease(item)}>+</button>
                                         </td>
-                                        <td>${calculatePrice(item).toFixed(2)}</td>
+                                        <td>₹{calculatePrice(item).toFixed(2)}</td>
                                         <th>
                                             <button className="btn btn-ghost btn-xs bg-red text-white" onClick={() => handleDelete(item)}>
                                                 <FaTrash />
@@ -215,7 +215,7 @@ const CartPage = () => {
                 <div className="md:w-1/2 space-y-3">
                     <h3 className="font-medium">Shopping Details</h3>
                     <p>Total Items: {cart.length}</p>
-                    <p>Total Price: ${orderTotal.toFixed(2)}</p>
+                    <p>Total Price: ₹{orderTotal.toFixed(2)}</p>
                     <Link to="/process-checkout">
                         <button className="btn bg-green text-white">Proceed to Checkout</button>
                     </Link>

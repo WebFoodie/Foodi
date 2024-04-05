@@ -61,23 +61,8 @@ const Navbar = () => {
         </details>
       </li>
       <li>
-        <details>
-          <summary>Services</summary>
-          <ul className="p-2">
-            <li>
-              <a>Online Order</a>
-            </li>
-            <li>
-              <a>Table Booking</a>
-            </li>
-            <li>
-              <a>Order Tracking</a>
-            </li>
-          </ul>
-        </details>
-      </li>
-      <li>
-        <a>Offers</a>
+        {/* <a>Offers</a> */}               
+        <Link to="/offers">Offers</Link>
       </li>
     </>
   );
@@ -126,23 +111,6 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          {/* Search Items */}
-          <button className="btn btn-ghost btn-circle hidden lg:flex">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </button>
 
           {/* Cart items */}
           <Link to="cart-page">
