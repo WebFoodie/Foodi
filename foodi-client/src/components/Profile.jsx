@@ -51,9 +51,7 @@ const Profile = ({ user }) => {
             <li>
               <a href="/order">Order</a>
             </li>
-            <li>
-              <a>Settings</a>
-            </li>
+           
             <li>
               
                 <Link to="/dashboard">Dashboard</Link>

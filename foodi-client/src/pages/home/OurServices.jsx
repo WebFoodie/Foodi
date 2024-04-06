@@ -21,7 +21,7 @@ const OurServices = () => {
                 offer exceptional services, blending culinary artistry with warm 
                 hospitality.
                 </p>
-                <button className='btn bg-green text-white px-8 py-3 rounded-full'>Explore</button>
+               
             </div>
             </div>
 

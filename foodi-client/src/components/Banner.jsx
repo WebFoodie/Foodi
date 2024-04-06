@@ -99,9 +99,7 @@ const Banner = () => {
             Where Each Plate Weaves a Story of Culinary Mastery and Passionate
             Craftsmanship
           </p>
-          <button className="btn bg-green px-8 py-3 font-semibold text-white rounded-full">
-            Order Now
-          </button>
+       
         </div>
       </div>
     </div>
